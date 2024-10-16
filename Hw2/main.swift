@@ -78,7 +78,7 @@ class Apartment {
 
 class Person {
     let name: String
-     weak var apartment: Apartment?
+    weak var apartment: Apartment?
     
     init(name: String) {
         self.name = name
@@ -112,7 +112,7 @@ person?.apartment?.getInfo()
 print("all objects weren't deinitialized for now")
 //apartment=nil//Marked code
 //person?.apartment//Marked code
-apartment=nil
+apartment = nil
 person = nil
  
 
@@ -128,7 +128,7 @@ person = nil
 print("*****************************")
 print("*****************************")
 class WeakNeighbor{
-     weak var node:Node?
+    weak var node: Node?
     init(node: Node?) {
         self.node = node
     }
@@ -141,15 +141,15 @@ class WeakNeighbor{
     }
 }
 class Node{
-    var children:[Node]
-    var value:Int
-    var neighbors:[WeakNeighbor]?
+    var children: [Node]
+    var value: Int
+    var neighbors: [WeakNeighbor]?
     
-    func addNode(child:Node){
+    func addNode(child: Node){
         children.append(child)
     }
     func addNeighbor(_ node: Node?) {
-        neighbors?.append(WeakNeighbor(node:node))
+        neighbors?.append(WeakNeighbor(node: node))
     }
     init(value: Int) {
         self.children = []
@@ -158,10 +158,9 @@ class Node{
     }
 }
 
-
-var node1:Node? = Node(value: 1) // values is just an example to show that nodes are different
-var node2:Node? = Node(value: 2)
-var node3:Node? = Node(value: 3)
+var node1: Node? = Node(value: 1) // values is just an example to show that nodes are different
+var node2: Node? = Node(value: 2)
+var node3: Node? = Node(value: 3)
 node1?.addNeighbor(node2)
 node3?.addNeighbor(node1)
 node1?.addNeighbor(node3)
@@ -173,7 +172,6 @@ node1 = nil
 //Lil description of the results and why they happened. As you can see we have a weak keyword  near node property in WeakNeighbor class (not "unowned" because it is possible and it actuly happened that node becomes nill ). In this example we see that node1 and node3 are referencing to one another. without weak keyword it would create a retain cylce and won't call deinit of WeakNeighbor when node1=nil and node3=nil, yet still with weak strong reference wasn't formed and ARC allows them to deinit.
     //    When we set node3 to nil we also deallocate its weak neighbors (weak node created from node1). When node1=nil we also deallocate its weak neighbors (weak nodes created from node3 and node2), but since node 3 was already deallocate it will print "Unknown value was deinitialized"
 
-
 print("*****************************")
 print("*****************************")
 print("Task 3")
@@ -181,7 +179,7 @@ print("*****************************")
 print("*****************************")
 //https://medium.com/@alexslkmain/copy-on-write-cow-in-swift-144d99c56c8b
 class DataClass{
-    var array:[Int]
+    var array: [Int]
     init(array: [Int]) {
         self.array = array
     }
@@ -210,8 +208,8 @@ class MyData{
 
 var data:MyData=MyData(array: [0,5,6,7])
 var dataClone=MyData(array: data.getArray())
-func printAddress(address o: UnsafeRawPointer ) {
-    print(String(format: "%p", Int(bitPattern: o)))
+func printAddress(address add: UnsafeRawPointer ) {
+    print(String(format: "%p", Int(bitPattern: add)))
 }
 
 print(data.getArray())
@@ -227,7 +225,6 @@ print(data.getArray())
 print(dataClone.getArray())
 printAddress(address: data.getArray())
 printAddress(address: dataClone.getArray())
-
 
 print("*****************************")
 print("*****************************")
